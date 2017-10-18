@@ -9,20 +9,67 @@
 import UIKit
 import AVFoundation
 import AVKit
+import Photos
 
-class NHImageTakingViewController: UIViewController {
-
+class NHImageTakingViewController: UIViewController, AVCapturePhotoCaptureDelegate {
+    
+    let captureSession = AVCaptureSession()
+    var previewLayer : AVCaptureVideoPreviewLayer!
+    var activeInput : AVCaptureDeviceInput!
+    let photoOutput = AVCapturePhotoOutput()
+    
+    var focusMatker : UIImageView!
+    var exposureMarker : UIImageView!
+    var resetMarker : UIImageView!
+    private var adjustingExposureContext = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        setupSession()
+        setupPreview()
+        startSession()
     }
     
+    func setupSession()
+    {
+        captureSession.sessionPreset = .high
+        let camera = AVCaptureDevice.default(for: .video)
+
+        do {
+            let input = try AVCaptureDeviceInput(device : camera!)
+            if captureSession.canAddInput(input){
+                captureSession.addInput(input)
+                activeInput = input
+            }
+        }
+        catch {
+            print("Error settig device input: \(error)")
+        }
+
+        let settings = AVCapturePhotoSettings()
+//        let previewPixelType = settings.availablePreviewPhotoPixelFormatTypes.first!
+//        let previewFormat = [
+//            kCVPixelBufferPixelFormatTypeKey as String: previewPixelType,
+//            kCVPixelBufferWidthKey as String: 160,
+//            kCVPixelBufferHeightKey as String: 160
+//        ]
+//        settings.previewPhotoFormat = previewFormat
+//        photoOutput.capturePhoto(with: settings, delegate: self)
+//
+//        if captureSession.canAddOutput(photoOutput)
+//        {
+//            captureSession.addOutput(photoOutput)
+//        }
+    }
+    
+    func setupPreview(){
+        
+    }
+    
+    func startSession(){
+        
+    }
 
     /*
     // MARK: - Navigation
