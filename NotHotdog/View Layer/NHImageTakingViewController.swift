@@ -16,14 +16,10 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
     let cameraManager = NHCameraManager()
     let predictionManager = NHPredictionManager()
     
+    let cameraSession = AVCaptureSession()
     var previewLayer : AVCaptureVideoPreviewLayer!
     var activeInput : AVCaptureDeviceInput!
     let photoOutput = AVCapturePhotoOutput()
-    
-    var focusMatker : UIImageView!
-    var exposureMarker : UIImageView!
-    var resetMarker : UIImageView!
-    private var adjustingExposureContext = ""
     
     @IBOutlet weak var cameraPreview: UIView!
     
@@ -31,9 +27,42 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
     {
         super.viewDidLoad()
         cameraManager.delegate = self
-
+        
+        setupSession()
+        setupPreview()
+        self.cameraSession.startRunning()
     }
-
+    
+    private func setupSession(){
+        cameraSession.sessionPreset = .high
+        let camera = AVCaptureDevice.default(for: .video)
+        if camera != nil {
+            do {
+                let input = try AVCaptureDeviceInput(device: camera!)
+                if cameraSession.canAddInput(input){
+                    cameraSession.addInput(input)
+                    activeInput = input
+                }
+                if cameraSession.canAddOutput(photoOutput){
+                    cameraSession.addOutput(photoOutput)
+                }
+            }
+            catch
+            {
+                print("Error setting input: \(error)")
+            }
+            
+        }
+    }
+    
+    private func setupPreview()
+    {
+        previewLayer = AVCaptureVideoPreviewLayer(session: cameraSession)
+        previewLayer.frame = cameraPreview.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        cameraPreview.layer.addSublayer(previewLayer)
+    }
+    
     func imageCaptured(image: UIImage)
     {
         print("Captured Image")
