@@ -14,9 +14,11 @@
 		FC407AA41F939355005EB940 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FC407AA21F939355005EB940 /* LaunchScreen.storyboard */; };
 		FC407AAF1F939355005EB940 /* NotHotdogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC407AAE1F939355005EB940 /* NotHotdogTests.swift */; };
 		FC407ABA1F939355005EB940 /* NotHotdogUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC407AB91F939355005EB940 /* NotHotdogUITests.swift */; };
+		FC469D8B1F9A6B87008E050B /* NHPredictionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC469D8A1F9A6B87008E050B /* NHPredictionManager.swift */; };
 		FCA71DB31F9796BB00CD91E6 /* NHImageTakingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA71DB21F9796BB00CD91E6 /* NHImageTakingViewController.swift */; };
 		FCA71DB61F97992300CD91E6 /* VGG16.mlmodel in Resources */ = {isa = PBXBuildFile; fileRef = FCA71DB51F97990700CD91E6 /* VGG16.mlmodel */; };
 		FCA71DB71F97994500CD91E6 /* Resnet50.mlmodel in Resources */ = {isa = PBXBuildFile; fileRef = FCA71DB41F9798FE00CD91E6 /* Resnet50.mlmodel */; };
+		FCDF9E851F9A630500ED84AF /* NHCameraManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCDF9E841F9A630500ED84AF /* NHCameraManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,9 +52,11 @@
 		FC407AB51F939355005EB940 /* NotHotdogUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NotHotdogUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC407AB91F939355005EB940 /* NotHotdogUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotHotdogUITests.swift; sourceTree = "<group>"; };
 		FC407ABB1F939355005EB940 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FC469D8A1F9A6B87008E050B /* NHPredictionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NHPredictionManager.swift; sourceTree = "<group>"; };
 		FCA71DB21F9796BB00CD91E6 /* NHImageTakingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NHImageTakingViewController.swift; sourceTree = "<group>"; };
 		FCA71DB41F9798FE00CD91E6 /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Resnet50.mlmodel; sourceTree = "<group>"; };
 		FCA71DB51F97990700CD91E6 /* VGG16.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = VGG16.mlmodel; sourceTree = "<group>"; };
+		FCDF9E841F9A630500ED84AF /* NHCameraManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NHCameraManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				FC407A961F939354005EB940 /* AppDelegate.swift */,
-				FCA71DB21F9796BB00CD91E6 /* NHImageTakingViewController.swift */,
-				FC407A9A1F939354005EB940 /* Main.storyboard */,
+				FCDF9E831F9A62A900ED84AF /* View Layer */,
+				FCDF9E861F9A630D00ED84AF /* Framework Layer */,
 				FC407AC71F9394FE005EB940 /* Resources */,
 				FC407AA21F939355005EB940 /* LaunchScreen.storyboard */,
 				FC407AA51F939355005EB940 /* Info.plist */,
@@ -140,6 +144,24 @@
 				FC407AA01F939355005EB940 /* Assets.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FCDF9E831F9A62A900ED84AF /* View Layer */ = {
+			isa = PBXGroup;
+			children = (
+				FC407A9A1F939354005EB940 /* Main.storyboard */,
+				FCA71DB21F9796BB00CD91E6 /* NHImageTakingViewController.swift */,
+			);
+			path = "View Layer";
+			sourceTree = "<group>";
+		};
+		FCDF9E861F9A630D00ED84AF /* Framework Layer */ = {
+			isa = PBXGroup;
+			children = (
+				FCDF9E841F9A630500ED84AF /* NHCameraManager.swift */,
+				FC469D8A1F9A6B87008E050B /* NHPredictionManager.swift */,
+			);
+			path = "Framework Layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,6 +302,8 @@
 			files = (
 				FCA71DB31F9796BB00CD91E6 /* NHImageTakingViewController.swift in Sources */,
 				FC407A9F1F939355005EB940 /* NotHotdog.xcdatamodeld in Sources */,
+				FC469D8B1F9A6B87008E050B /* NHPredictionManager.swift in Sources */,
+				FCDF9E851F9A630500ED84AF /* NHCameraManager.swift in Sources */,
 				FC407A971F939354005EB940 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
