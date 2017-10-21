@@ -22,6 +22,7 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
     let photoOutput = AVCapturePhotoOutput()
     
     @IBOutlet weak var cameraPreview: UIView!
+
     
     override func viewDidLoad()
     {
@@ -61,6 +62,16 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
         previewLayer.frame = cameraPreview.bounds
         previewLayer.videoGravity = .resizeAspectFill
         cameraPreview.layer.addSublayer(previewLayer)
+    }
+   
+    @IBAction func captureImagePressed(_ sender: UIButton) {
+        capturePhoto()
+    }
+    
+    private func capturePhoto()
+    {
+        let connection = photoOutput.connection(with: .video)
+//        photoOutput.capturePhoto(with: <#T##AVCapturePhotoSettings#>, delegate: <#T##AVCapturePhotoCaptureDelegate#>)
     }
     
     func imageCaptured(image: UIImage)

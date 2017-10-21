@@ -66,6 +66,9 @@ class NHCameraManager: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         guard cameraSession.canAddInput(captureDeviceInput) else {return}
         let videoOutput = AVCaptureVideoDataOutput()
         videoOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label : "sample_buffer"))
+        videoOutput.alwaysDiscardsLateVideoFrames = true
+        videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
+        cameraSession.sessionPreset = .high
         guard cameraSession.canAddOutput(videoOutput) else {return}
         cameraSession.addOutput(videoOutput)
         guard let connection = videoOutput.connection(with: .video) else {return}
@@ -88,7 +91,7 @@ class NHCameraManager: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
         return UIImage(cgImage : cgImage)
     }
     
-    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         guard let uiImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else {return}
         DispatchQueue.main.async{
             self.delegate?.imageCaptured(image: uiImage)
