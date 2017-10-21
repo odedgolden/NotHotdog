@@ -11,15 +11,17 @@ import AVFoundation
 import AVKit
 import Photos
 
-class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
+class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
 
-    let cameraManager = NHCameraManager()
+//    let cameraManager = NHCameraManager()
     let predictionManager = NHPredictionManager()
     
     let cameraSession = AVCaptureSession()
+    private let sampleBufferQueue = DispatchQueue(label : "sample_buffer")
     var previewLayer : AVCaptureVideoPreviewLayer!
     var activeInput : AVCaptureDeviceInput!
     let photoOutput = AVCapturePhotoOutput()
+    let videoOutput = AVCaptureVideoDataOutput()
     
     @IBOutlet weak var cameraPreview: UIView!
 
@@ -27,7 +29,7 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        cameraManager.delegate = self
+//        cameraManager.delegate = self
         
         setupSession()
         setupPreview()
@@ -45,7 +47,12 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
                     activeInput = input
                 }
                 if cameraSession.canAddOutput(photoOutput){
+                    videoOutput.setSampleBufferDelegate(self, queue: sampleBufferQueue)
+                    videoOutput.alwaysDiscardsLateVideoFrames = true
+                    videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
                     cameraSession.addOutput(photoOutput)
+                    cameraSession.addOutput(videoOutput)
+
                 }
             }
             catch
@@ -77,6 +84,19 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate {
     func imageCaptured(image: UIImage)
     {
         print("Captured Image")
+    }
+    
+    public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
+    {
+        print("yay1")
+//        guard let uiImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else {return}
+//        DispatchQueue.main.async{
+//            self.delegate?.imageCaptured(image: uiImage)
+//        }
+    }
+    
+    public func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection){
+        print("yay2")
     }
     /*
     // MARK: - Navigation
