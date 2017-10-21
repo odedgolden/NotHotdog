@@ -11,12 +11,12 @@ import AVFoundation
 import AVKit
 import Photos
 
-class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
+class NHImageTakingViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
 
-//    let cameraManager = NHCameraManager()
     let predictionManager = NHPredictionManager()
     
     let cameraSession = AVCaptureSession()
+    private let context = CIContext()
     private let sampleBufferQueue = DispatchQueue(label : "sample_buffer")
     var previewLayer : AVCaptureVideoPreviewLayer!
     var activeInput : AVCaptureDeviceInput!
@@ -24,35 +24,36 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate, AV
     let videoOutput = AVCaptureVideoDataOutput()
     
     @IBOutlet weak var cameraPreview: UIView!
-
+    @IBOutlet weak var predictionLabel: UILabel!
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-//        cameraManager.delegate = self
         
         setupSession()
         setupPreview()
         self.cameraSession.startRunning()
     }
     
-    private func setupSession(){
+    private func setupSession()
+    {
         cameraSession.sessionPreset = .high
         let camera = AVCaptureDevice.default(for: .video)
-        if camera != nil {
+        if camera != nil
+        {
             do {
                 let input = try AVCaptureDeviceInput(device: camera!)
                 if cameraSession.canAddInput(input){
                     cameraSession.addInput(input)
                     activeInput = input
                 }
-                if cameraSession.canAddOutput(photoOutput){
+                if cameraSession.canAddOutput(photoOutput)
+                {
                     videoOutput.setSampleBufferDelegate(self, queue: sampleBufferQueue)
                     videoOutput.alwaysDiscardsLateVideoFrames = true
                     videoOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_32BGRA]
                     cameraSession.addOutput(photoOutput)
                     cameraSession.addOutput(videoOutput)
-
                 }
             }
             catch
@@ -70,10 +71,6 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate, AV
         previewLayer.videoGravity = .resizeAspectFill
         cameraPreview.layer.addSublayer(previewLayer)
     }
-   
-    @IBAction func captureImagePressed(_ sender: UIButton) {
-        capturePhoto()
-    }
     
     private func capturePhoto()
     {
@@ -89,14 +86,20 @@ class NHImageTakingViewController: UIViewController, NHCameraManagerDelegate, AV
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
     {
         print("yay1")
-//        guard let uiImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else {return}
-//        DispatchQueue.main.async{
-//            self.delegate?.imageCaptured(image: uiImage)
-//        }
+        guard let ciImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else {return}
+        // Predict image
+        predictionManager.predictImage(image: ciImage, completion: { [weak self] (labelString) in
+            DispatchQueue.main.async{
+                self?.predictionLabel.text = labelString
+            }
+        })
     }
     
-    public func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection){
-        print("yay2")
+    private func imageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> CIImage?
+    {
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {return nil}
+        let ciImage = CIImage(cvPixelBuffer: imageBuffer)
+        return ciImage
     }
     /*
     // MARK: - Navigation

@@ -24,19 +24,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XfK-Yc-zZW" userLabel="Bottom Toolbar">
                                 <rect key="frame" x="0.0" y="539" width="375" height="128"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Al9-YR-EYo">
-                                        <rect key="frame" x="164" y="49" width="46" height="30"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="captureImagePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MSU-hH-qrX"/>
-                                        </connections>
-                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4ri-It-L02">
+                                        <rect key="frame" x="20" y="20" width="335" height="88"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="Al9-YR-EYo" firstAttribute="centerY" secondItem="XfK-Yc-zZW" secondAttribute="centerY" id="6YB-2h-plk"/>
-                                    <constraint firstItem="Al9-YR-EYo" firstAttribute="centerX" secondItem="XfK-Yc-zZW" secondAttribute="centerX" id="ENZ-zP-V0w"/>
+                                    <constraint firstAttribute="trailing" secondItem="4ri-It-L02" secondAttribute="trailing" constant="20" symbolic="YES" id="C4r-to-XaA"/>
+                                    <constraint firstAttribute="bottom" secondItem="4ri-It-L02" secondAttribute="bottom" constant="20" symbolic="YES" id="ccJ-Fm-kUK"/>
+                                    <constraint firstItem="4ri-It-L02" firstAttribute="leading" secondItem="XfK-Yc-zZW" secondAttribute="leading" constant="20" symbolic="YES" id="hl4-LI-bDW"/>
                                     <constraint firstAttribute="height" constant="128" id="ry0-Jz-n4e"/>
+                                    <constraint firstItem="4ri-It-L02" firstAttribute="top" secondItem="XfK-Yc-zZW" secondAttribute="top" constant="20" symbolic="YES" id="tjf-BD-0AM"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -54,6 +55,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraPreview" destination="MZn-Wi-5hf" id="t3S-Pj-ead"/>
+                        <outlet property="predictionLabel" destination="4ri-It-L02" id="4mY-xM-2UU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
