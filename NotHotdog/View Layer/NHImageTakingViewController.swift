@@ -60,7 +60,6 @@ class NHImageTakingViewController: UIViewController, AVCaptureVideoDataOutputSam
             {
                 print("Error setting input: \(error)")
             }
-            
         }
     }
     
@@ -72,20 +71,8 @@ class NHImageTakingViewController: UIViewController, AVCaptureVideoDataOutputSam
         cameraPreview.layer.addSublayer(previewLayer)
     }
     
-    private func capturePhoto()
-    {
-        let connection = photoOutput.connection(with: .video)
-//        photoOutput.capturePhoto(with: <#T##AVCapturePhotoSettings#>, delegate: <#T##AVCapturePhotoCaptureDelegate#>)
-    }
-    
-    func imageCaptured(image: UIImage)
-    {
-        print("Captured Image")
-    }
-    
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection)
     {
-        print("yay1")
         guard let ciImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer) else {return}
         // Predict image
         predictionManager.predictImage(image: ciImage, completion: { [weak self] (labelString) in
@@ -101,14 +88,4 @@ class NHImageTakingViewController: UIViewController, AVCaptureVideoDataOutputSam
         let ciImage = CIImage(cvPixelBuffer: imageBuffer)
         return ciImage
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
